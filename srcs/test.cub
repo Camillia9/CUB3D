@@ -1,0 +1,11 @@
+NO ./texture.xpm
+SO ./texture.xpm  
+WE ./texture.xpm
+EA ./texture.xpm
+
+F 255,0,0
+C 0,0,255
+
+111
+1N1
+111
