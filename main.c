@@ -7,6 +7,7 @@ int main(int argc, char **argv)
 
 
     validate_arguments(argc, argv);
+    read_and_parse_config(&data, argv[1]);
     // Allouer la structure principale
     data = malloc(sizeof(t_data));
     if (!data)

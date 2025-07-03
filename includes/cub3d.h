@@ -33,5 +33,9 @@ int check_file_extension(char *filename);
 int check_file_access(char *filename);
 void validate_arguments(int argc, char **argv);
 
+//check_texture
+int check_texture_file(char *path);
+void parse_texture(t_data *data, char *line);
+
 
 #endif

@@ -20,6 +20,8 @@ INCLUDES = -I$(LIBFT_DIR) -I$(PRINTF_DIR) -I$(GET_NEXT_LINE_DIR) -I$(MLX_DIR)
 
 LIBFT_DIR = Libft
 LIBFT = $(LIBFT_DIR)/libft.a
+GET_NEXT_LINE_DIR = $(LIBFT_DIR)/get_next_line
+GET_NEXT_LINE = $(GET_NEXT_LINE_DIR)/libftgetnextline.a
 MLX_DIR = minilibx-linux
 MLX = $(MLX_DIR)/libmlx_Linux.a
 
@@ -31,19 +33,24 @@ all: mlx $(LIBFT) $(NAME)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
+$(GET_NEXT_LINE):
+	make -C $(GET_NEXT_LINE_DIR)
+
 mlx:
 	make -C $(MLX_DIR)
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLXFLAGS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT) $(GET_NEXT_LINE) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(GET_NEXT_LINE) $(MLXFLAGS) -o $(NAME)
 
 clean:
 	make -C $(LIBFT_DIR) clean
+	make -C $(GET_NEXT_LINE_DIR) clean
 	make -C $(MLX_DIR) clean
 	rm -f $(OBJS)
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
+	make -C $(GET_NEXT_LINE_DIR) fclean
 	make -C $(MLX_DIR) clean
 	rm -f $(NAME)
 

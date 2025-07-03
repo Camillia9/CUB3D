@@ -80,49 +80,49 @@ void print_error(const char *message)
  * Version simplifiée de get_next_line pour la démo
  * (Tu devrais utiliser ta vraie implémentation de get_next_line)
  */
-char *get_next_line(int fd)
-{
-    static char buffer[1024];
-    static int pos = 0;
-    static int bytes_read = 0;
-    char *line = malloc(1024);
-    int i = 0;
+//char *get_next_line(int fd)
+//{
+//    static char buffer[1024];
+//    static int pos = 0;
+//    static int bytes_read = 0;
+//    char *line = malloc(1024);
+//    int i = 0;
     
-    if (!line)
-        return NULL;
+//    if (!line)
+//        return NULL;
     
-    while (1)
-    {
-        if (pos >= bytes_read)
-        {
-            bytes_read = read(fd, buffer, 1023);
-            if (bytes_read <= 0)
-            {
-                if (i == 0)
-                {
-                    free(line);
-                    return NULL;
-                }
-                break;
-            }
-            buffer[bytes_read] = '\0';
-            pos = 0;
-        }
+//    while (1)
+//    {
+//        if (pos >= bytes_read)
+//        {
+//            bytes_read = read(fd, buffer, 1023);
+//            if (bytes_read <= 0)
+//            {
+//                if (i == 0)
+//                {
+//                    free(line);
+//                    return NULL;
+//                }
+//                break;
+//            }
+//            buffer[bytes_read] = '\0';
+//            pos = 0;
+//        }
         
-        if (buffer[pos] == '\n')
-        {
-            pos++;
-            break;
-        }
+//        if (buffer[pos] == '\n')
+//        {
+//            pos++;
+//            break;
+//        }
         
-        line[i++] = buffer[pos++];
-        if (i >= 1023)
-            break;
-    }
+//        line[i++] = buffer[pos++];
+//        if (i >= 1023)
+//            break;
+//    }
     
-    line[i] = '\0';
-    return line;
-}
+//    line[i] = '\0';
+//    return line;
+//}
 
 /**
  * Supprime les espaces en début et fin de chaîne
@@ -150,7 +150,7 @@ char *trim_whitespace(char *str)
 /**
  * Vérifie si un fichier de texture existe et est lisible
  */
-int check_texture_file(const char *path)
+int check_texture_file(char *path)
 {
     int fd = open(path, O_RDONLY);
     if (fd == -1)
@@ -159,53 +159,138 @@ int check_texture_file(const char *path)
     return 1;
 }
 
-/**
- * Parse une ligne de texture (NO, SO, WE, EA)
- */
-void parse_texture(t_data *data, char *line)
+///**
+// * Parse une ligne de texture (NO, SO, WE, EA)
+// */
+//void parse_texture(t_data *data, char *line)
+//{
+//    char *identifier = strtok(line, " ");
+//    char *path = strtok(NULL, " ");
+//    char *extra = strtok(NULL, " ");
+    
+//    // Vérifier qu'il n'y a pas d'arguments supplémentaires
+//    if (extra != NULL)
+//        print_error("Invalid texture format: too many arguments");
+    
+//    if (!path)
+//        print_error("Invalid texture format: missing path");
+    
+//    path = trim_whitespace(path);
+    
+//    // Vérifier que le fichier de texture existe
+//    if (!check_texture_file(path))
+//        print_error("Texture file does not exist or is not readable");
+    
+//    // Assigner la texture selon l'identifiant
+//    if (strcmp(identifier, "NO") == 0)
+//    {
+//        if (data->textures.north_path)
+//            print_error("Duplicate NO texture definition");
+//        data->textures.north_path = strdup(path);
+//    }
+//    else if (strcmp(identifier, "SO") == 0)
+//    {
+//        if (data->textures.south_path)
+//            print_error("Duplicate SO texture definition");
+//        data->textures.south_path = strdup(path);
+//    }
+//    else if (strcmp(identifier, "WE") == 0)
+//    {
+//        if (data->textures.west_path)
+//            print_error("Duplicate WE texture definition");
+//        data->textures.west_path = strdup(path);
+//    }
+//    else if (strcmp(identifier, "EA") == 0)
+//    {
+//        if (data->textures.east_path)
+//            print_error("Duplicate EA texture definition");
+//        data->textures.east_path = strdup(path);
+//    }
+//}
+
+int	find_identifier_end(char *line)
 {
-    char *identifier = strtok(line, " ");
-    char *path = strtok(NULL, " ");
-    char *extra = strtok(NULL, " ");
-    
-    // Vérifier qu'il n'y a pas d'arguments supplémentaires
-    if (extra != NULL)
-        print_error("Invalid texture format: too many arguments");
-    
-    if (!path)
-        print_error("Invalid texture format: missing path");
-    
-    path = trim_whitespace(path);
-    
-    // Vérifier que le fichier de texture existe
-    if (!check_texture_file(path))
-        print_error("Texture file does not exist or is not readable");
-    
-    // Assigner la texture selon l'identifiant
-    if (strcmp(identifier, "NO") == 0)
-    {
-        if (data->textures.north_path)
-            print_error("Duplicate NO texture definition");
-        data->textures.north_path = strdup(path);
-    }
-    else if (strcmp(identifier, "SO") == 0)
-    {
-        if (data->textures.south_path)
-            print_error("Duplicate SO texture definition");
-        data->textures.south_path = strdup(path);
-    }
-    else if (strcmp(identifier, "WE") == 0)
-    {
-        if (data->textures.west_path)
-            print_error("Duplicate WE texture definition");
-        data->textures.west_path = strdup(path);
-    }
-    else if (strcmp(identifier, "EA") == 0)
-    {
-        if (data->textures.east_path)
-            print_error("Duplicate EA texture definition");
-        data->textures.east_path = strdup(path);
-    }
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != ' ' && line[i] != '\t')
+		i++;
+	return (i);
+}
+
+int	skip_whitespace(char *line, int start)
+{
+	while (line[start] && (line[start] == ' ' || line[start] == '\t'))
+		start++;
+	return (start);
+}
+
+int	find_path_end(char *line, int start)
+{
+	int	end;
+
+	end = start;
+	while (line[end] && line[end] != ' ' && line[end] != '\t' 
+		&& line[end] != '\n' && line[end] != '\r')
+		end++;
+	return (end);
+}
+
+void	assign_texture_path(t_data *data, char *id, char *path)
+{
+	if (ft_strncmp(id, "NO", 2) == 0)
+	{
+		if (data->textures.north_path)
+			error_texture(data, "Duplicate NO texture definition");
+		data->textures.north_path = safe_strdup(data, path);
+	}
+	else if (ft_strncmp(id, "SO", 2) == 0)
+	{
+		if (data->textures.south_path)
+			error_texture(data, "Duplicate SO texture definition");
+		data->textures.south_path = safe_strdup(data, path);
+	}
+	else if (ft_strncmp(id, "WE", 2) == 0)
+	{
+		if (data->textures.west_path)
+			error_texture(data, "Duplicate WE texture definition");
+		data->textures.west_path = safe_strdup(data, path);
+	}
+	else if (ft_strncmp(id, "EA", 2) == 0)
+	{
+		if (data->textures.east_path)
+			error_texture(data, "Duplicate EA texture definition");
+		data->textures.east_path = safe_strdup(data, path);
+	}
+}
+
+void	parse_texture(t_data *data, char *line)
+{
+	int		id_end;
+	int		path_start;
+	int		path_end;
+	int		extra_check;
+	char	identifier[3];
+	char	*path;
+
+	id_end = find_identifier_end(line);
+	if (id_end != 2)
+		error_texture(data, "Invalid texture identifier");
+	ft_strncpy(identifier, line, 2);
+	identifier[2] = '\0';
+	path_start = skip_whitespace(line, id_end);
+	if (!line[path_start])
+		error_texture(data, "Missing texture path");
+	path_end = find_path_end(line, path_start);
+	extra_check = skip_whitespace(line, path_end);
+	if (line[extra_check])
+		error_texture(data, "Too many arguments");
+	path = ft_substr(line, path_start, path_end - path_start);
+	if (!path)
+		error_memory(data, "Failed to extract path");
+	validate_texture_file(data, path);
+	assign_texture_path(data, identifier, path);
+	free(path);
 }
 
 /**
@@ -241,56 +326,176 @@ int encode_color(int r, int g, int b)
     return (r << 16) | (g << 8) | b;
 }
 
-/**
- * Parse une ligne de couleur (F ou C)
- */
-void parse_color(t_data *data, char *line)
+///**
+// * Parse une ligne de couleur (F ou C)
+// */
+//void parse_color(t_data *data, char *line)
+//{
+//    char *identifier = strtok(line, " ");
+//    char *rgb_str = strtok(NULL, " ");
+//    char *extra = strtok(NULL, " ");
+    
+//    // Vérifier qu'il n'y a pas d'arguments supplémentaires
+//    if (extra != NULL)
+//        print_error("Invalid color format: too many arguments");
+    
+//    if (!rgb_str)
+//        print_error("Invalid color format: missing RGB values");
+    
+//    rgb_str = trim_whitespace(rgb_str);
+    
+//    // Parser les valeurs RGB
+//    char *r_str = strtok(rgb_str, ",");
+//    char *g_str = strtok(NULL, ",");
+//    char *b_str = strtok(NULL, ",");
+//    char *extra_color = strtok(NULL, ",");
+    
+//    if (!r_str || !g_str || !b_str || extra_color)
+//        print_error("Invalid color format: must be R,G,B");
+    
+//    int r = parse_rgb_value(r_str);
+//    int g = parse_rgb_value(g_str);
+//    int b = parse_rgb_value(b_str);
+    
+//    // Assigner la couleur selon l'identifiant
+//    if (strcmp(identifier, "F") == 0)
+//    {
+//        if (data->colors.floor_r != -1) // -1 = non initialisé
+//            print_error("Duplicate Floor color definition");
+//        data->colors.floor_r = r;
+//        data->colors.floor_g = g;
+//        data->colors.floor_b = b;
+//        data->colors.floor_color = encode_color(r, g, b);
+//    }
+//    else if (strcmp(identifier, "C") == 0)
+//    {
+//        if (data->colors.ceiling_r != -1)
+//            print_error("Duplicate Ceiling color definition");
+//        data->colors.ceiling_r = r;
+//        data->colors.ceiling_g = g;
+//        data->colors.ceiling_b = b;
+//        data->colors.ceiling_color = encode_color(r, g, b);
+//    }
+//}
+
+int	find_comma(char *str, int start)
 {
-    char *identifier = strtok(line, " ");
-    char *rgb_str = strtok(NULL, " ");
-    char *extra = strtok(NULL, " ");
-    
-    // Vérifier qu'il n'y a pas d'arguments supplémentaires
-    if (extra != NULL)
-        print_error("Invalid color format: too many arguments");
-    
-    if (!rgb_str)
-        print_error("Invalid color format: missing RGB values");
-    
-    rgb_str = trim_whitespace(rgb_str);
-    
-    // Parser les valeurs RGB
-    char *r_str = strtok(rgb_str, ",");
-    char *g_str = strtok(NULL, ",");
-    char *b_str = strtok(NULL, ",");
-    char *extra_color = strtok(NULL, ",");
-    
-    if (!r_str || !g_str || !b_str || extra_color)
-        print_error("Invalid color format: must be R,G,B");
-    
-    int r = parse_rgb_value(r_str);
-    int g = parse_rgb_value(g_str);
-    int b = parse_rgb_value(b_str);
-    
-    // Assigner la couleur selon l'identifiant
-    if (strcmp(identifier, "F") == 0)
-    {
-        if (data->colors.floor_r != -1) // -1 = non initialisé
-            print_error("Duplicate Floor color definition");
-        data->colors.floor_r = r;
-        data->colors.floor_g = g;
-        data->colors.floor_b = b;
-        data->colors.floor_color = encode_color(r, g, b);
-    }
-    else if (strcmp(identifier, "C") == 0)
-    {
-        if (data->colors.ceiling_r != -1)
-            print_error("Duplicate Ceiling color definition");
-        data->colors.ceiling_r = r;
-        data->colors.ceiling_g = g;
-        data->colors.ceiling_b = b;
-        data->colors.ceiling_color = encode_color(r, g, b);
-    }
+	while (str[start] && str[start] != ',')
+		start++;
+	return (start);
+}
+
+int	parse_single_rgb(char *str, int start, int end)
+{
+	int		value;
+	int		i;
+
+	value = 0;
+	i = start;
+	if (start == end)
+		return (-1);
+	while (i < end)
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (-1);
+		value = value * 10 + (str[i] - '0');
+		if (value > 255)
+			return (-1);
+		i++;
+	}
+	return (value);
+}
+
+void	validate_rgb_format(t_data *data, char *rgb_str)
+{
+	int	comma_count;
+	int	i;
+
+	comma_count = 0;
+	i = 0;
+	while (rgb_str[i])
+	{
+		if (rgb_str[i] == ',')
+			comma_count++;
+		else if (rgb_str[i] == ' ' || rgb_str[i] == '\t')
+			error_color(data, "No spaces allowed in RGB values");
+		i++;
+	}
+	if (comma_count != 2)
+		error_color(data, "Invalid color format: must be R,G,B");
+}
+
+void	parse_rgb_values(t_data *data, char *rgb_str, int *rgb)
+{
+	int	pos[4];
+	int	i;
+
+	validate_rgb_format(data, rgb_str);
+	pos[0] = 0;
+	pos[1] = find_comma(rgb_str, 0);
+	pos[2] = find_comma(rgb_str, pos[1] + 1);
+	pos[3] = ft_strlen(rgb_str);
+	if (pos[1] == 0 || pos[2] == pos[1] + 1 || pos[2] == pos[3])
+		error_color(data, "Empty RGB value");
+	i = 0;
+	while (i < 3)
+	{
+		rgb[i] = parse_single_rgb(rgb_str, pos[i] + (i > 0), pos[i + 1]);
+		if (rgb[i] == -1)
+			error_color(data, "Invalid RGB value");
+		i++;
+	}
+}
+
+void	assign_color_values(t_data *data, char identifier, int *rgb)
+{
+	if (identifier == 'F')
+	{
+		if (data->colors.floor_r != -1)
+			error_color(data, "Duplicate Floor color definition");
+		data->colors.floor_r = rgb[0];
+		data->colors.floor_g = rgb[1];
+		data->colors.floor_b = rgb[2];
+		data->colors.floor_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+	}
+	else if (identifier == 'C')
+	{
+		if (data->colors.ceiling_r != -1)
+			error_color(data, "Duplicate Ceiling color definition");
+		data->colors.ceiling_r = rgb[0];
+		data->colors.ceiling_g = rgb[1];
+		data->colors.ceiling_b = rgb[2];
+		data->colors.ceiling_color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
+	}
+}
+
+void	parse_color(t_data *data, char *line)
+{
+	int		id_end;
+	int		rgb_start;
+	int		rgb_end;
+	int		extra_check;
+	char	*rgb_str;
+	int		rgb[3];
+
+	if (line[0] != 'F' && line[0] != 'C')
+		error_color(data, "Invalid color identifier");
+	id_end = find_identifier_end(line);
+	if (id_end != 1)
+		error_color(data, "Invalid color identifier");
+	rgb_start = skip_whitespace(line, id_end);
+	if (!line[rgb_start])
+		error_color(data, "Missing RGB values");
+	rgb_end = find_path_end(line, rgb_start);
+	extra_check = skip_whitespace(line, rgb_end);
+	if (line[extra_check])
+		error_color(data, "Too many arguments");
+	rgb_str = ft_substr(line, rgb_start, rgb_end - rgb_start);
+	if (!rgb_str)
+		error_memory(data, "Failed to extract RGB string");
+	parse_rgb_values(data, rgb_str, rgb);
+	assign_color_values(data, line[0], rgb);
+	free(rgb_str);
 }
 
 /**
@@ -381,7 +586,7 @@ int parse_config_line(t_data *data, char *line)
 /**
  * Lit et parse le fichier de configuration
  */
-void read_and_parse_config(t_data *data, const char *filename)
+void read_and_parse_config(t_data *data, char *filename)
 {
     int fd;
     char *line;
