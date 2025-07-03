@@ -29,6 +29,7 @@ int main(void)
 
     // Setup des événements pour pouvoir fermer
     mlx_hook(data->mlx.win, 2, 1L<<0, handle_keypress, data);    // KeyPress
+    mlx_hook(data->mlx.win, 3, 1L<<1, handle_keyrelease, data); // Keyrelease
     mlx_hook(data->mlx.win, 17, 1L<<17, close_game, data);     // Close button
     
     // Lancer la boucle

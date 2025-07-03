@@ -32,26 +32,37 @@ int	handle_keypress(int keycode, t_data *data)
 {
 	if (keycode == 65307)
 		close_game(data);
+	if (keycode < 256)
+		data->keys[keycode] = 1;
 	return (0);
 }
 
-int	handle_mouvement(t_data *data)
+int handle_keyrelease(int keycode, t_data *data)
+{
+	if (keycode < 256)
+		data->keys[keycode] = 0;
+	return (0);
+}
+
+void	handle_mouvement(t_data *data)
 {
 	static int	color = 0x000000;
-	
-	if (data->keys[119])
+
+	if (data->keys[119]) // W
 		color = 0xFF0000;
-	if (data->keys[115])   
-        color = 0x00FF00;
-    if (data->keys[97])  
-        color = 0x0000FF;
-    if (data->keys[100])
-        color = 0xFFFF00;
+	if (data->keys[115]) // S
+		color = 0x00FF00;
+	if (data->keys[97])  // A
+		color = 0x0000FF;
+	if (data->keys[100]) // D
+		color = 0xFFFF00;
+	fill_screen(data, color); 
 }
+
 int game_loop(t_data *data)
 {
 	handle_mouvement(data);
-	clear_screen(data);
+	//clear_screen(data);
 	//ray casting
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	return (0);

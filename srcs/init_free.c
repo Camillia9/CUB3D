@@ -15,3 +15,20 @@ int close_game(t_data *data)
     }
     exit(0);
 }
+
+void free_texture(t_data *data, t_texture *texture)
+{
+	if (texture->img)
+	{
+		mlx_destroy_image(data->mlx.mlx, texture->img);
+		texture->img = NULL;
+	}
+}
+
+void free_all_textures(t_data *data)
+{
+	free_texture(data, &data->textures.north);
+	free_texture(data, &data->textures.south);
+	free_texture(data, &data->textures.west);
+	free_texture(data, &data->textures.east);
+}
