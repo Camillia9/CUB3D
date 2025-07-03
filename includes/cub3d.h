@@ -7,6 +7,7 @@
 #include <string.h>
 #include "structures.h"
 #include "mlx.h"
+#include <fcntl.h>
 
 //MLX
 int	init_mlx(t_data *data);
@@ -24,5 +25,13 @@ void free_texture(t_data *data, t_texture *texture);
 void free_all_textures(t_data *data);
 
 //TEST
+
+
+//check_file
+void print_error(const char *message);
+int check_file_extension(char *filename);
+int check_file_access(char *filename);
+void validate_arguments(int argc, char **argv);
+
 
 #endif

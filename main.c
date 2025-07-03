@@ -1,10 +1,12 @@
 #include "../includes/cub3d.h"
 #include <string.h>
 
-int main(void)
+int main(int argc, char **argv)
 {
     t_data *data;
-    
+
+
+    validate_arguments(argc, argv);
     // Allouer la structure principale
     data = malloc(sizeof(t_data));
     if (!data)

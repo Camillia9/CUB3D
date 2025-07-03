@@ -3,13 +3,14 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -fPIE
 MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
 
-SRCS_DIR = srcs/
+SRCS_DIR = ./
 
-SRCS =  $(SRCS_DIR)init_game.c \
-		$(SRCS_DIR)init_free.c \
-		$(SRCS_DIR)utils_mlx.c \
-		$(SRCS_DIR)init_textures.c \
+SRCS =  $(SRCS_DIR)mlx/init_game.c \
+		$(SRCS_DIR)mlx/init_free.c \
+		$(SRCS_DIR)mlx/utils_mlx.c \
+		$(SRCS_DIR)mlx/init_textures.c \
 		$(SRCS_DIR)main.c \
+		$(SRCS_DIR)parsing/check_file.c \
 
 
 
