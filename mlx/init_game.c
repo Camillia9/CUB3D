@@ -32,8 +32,8 @@ void	init_player(t_player *player)
 {
 	// Position de départ (centre de la case où est P)
 	// ,5 pour qu'ils sit bien au milieu 
-	player->x = 7.5;
-	player->y = 2.5;
+	player->x = 10.5;
+	player->y = 1.5;
 
 	// Il regardera vers le nord
 	player->dir_x = 0.0;
@@ -46,6 +46,10 @@ void	init_player(t_player *player)
 	player->rot_speed = 0.01;
 }
 
+//void	init_direction(t_player *s_player)
+//{
+//	if ()
+//}
 int game_loop(t_data *data)
 {
 	handle_mouvement(data);

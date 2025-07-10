@@ -14,6 +14,9 @@ static void	calculate_wall_height(t_ray *ray, int screen_height, int *draw_start
 	int	wall_height;
 	int	screen_center;
 
+	if (ray->distance < 0.1)
+		ray->distance = 0.1;
+
 	wall_height = (int)(screen_height / ray->distance);
 	screen_center = screen_height / 2;
 

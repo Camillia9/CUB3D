@@ -11,7 +11,7 @@
 #include "mlx.h"
 
 // Map
-#define MAP_SIZE 14
+#define MAP_SIZE 20
 
 // WASD
 #define KEY_W 119

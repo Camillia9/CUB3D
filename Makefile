@@ -17,10 +17,6 @@ SRCS =  $(SRCS_DIR)mlx/init_game.c \
 		$(SRCS_DIR)mlx/init_rotate.c \
 		$(SRCS_DIR)mlx/init.keys.c \
 
-
-
-
-
 OBJS = $(SRCS:.c=.o)
 
 INCLUDES = -I$(LIBFT_DIR) -I$(PRINTF_DIR) -I$(GET_NEXT_LINE_DIR) -I$(MLX_DIR)
