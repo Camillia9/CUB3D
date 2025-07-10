@@ -20,3 +20,9 @@ void fill_screen(t_data *data, int color)
 	}
 }
 
+void    render_frame(t_data *data)
+{
+    fill_screen(data, 0x000000);
+    render_scene(data);
+    mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+}

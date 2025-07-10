@@ -72,6 +72,7 @@ typedef struct s_mlx
 	int		line_length;    // Longueur ligne
 	int		endian;         // Endian
 }	t_mlx;
+
 typedef struct s_ray
 {
 	double	camera_x;       // Position X sur l'écran (-1 à 1)
@@ -89,7 +90,7 @@ typedef struct s_ray
 	int		step_x;         // Direction du pas X (-1 ou 1)
 	int		step_y;         // Direction du pas Y (-1 ou 1)
 
-	int		hit;            // 1 si mur touché
+	int		hit_wall;            // 1 si mur touché
 	int		side;           // Côté touché (0=NS, 1=EW)
 	double	perp_wall_dist; // Distance perpendiculaire au mur
 
@@ -97,10 +98,20 @@ typedef struct s_ray
 	int		draw_start;     // Début Y de la ligne
 	int		draw_end;       // Fin Y de la ligne
 
-	double	wall_x;         // Position exacte sur le mur
+	double	distance;       // Position exacte sur le mur
+	int		wall_x;			// Position du mur touché
+	int		wall_y;			// Position du mur touché
 	int		tex_x;          // Coordonnée X texture
 	int		tex_num;        // Numéro de texture (0=NO, 1=SO, 2=WE, 3=EA)
 }	t_ray;
+
+// Structure pour stocker le résultat d'un rayon
+//typedef struct s_ray_result {
+//	int hit_wall;        // 1 si on a touché un mur
+//	double distance;     // Distance jusqu'au mur
+//	int wall_x, wall_y;  // Position du mur touché
+//	int side;            // (0=vertical, 1=horizontal)
+//} t_ray_result;
 
 typedef struct s_data
 {
@@ -116,6 +127,7 @@ typedef struct s_data
 
 	// Flags pour la gestion
 	int			keys[256];      // État des touches
+	int			arrow_keys[10]; // Etat des fleches
 	int			running;        // 1 si le jeu tourne
 }	t_data;
 

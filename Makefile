@@ -10,7 +10,14 @@ SRCS =  $(SRCS_DIR)mlx/init_game.c \
 		$(SRCS_DIR)mlx/utils_mlx.c \
 		$(SRCS_DIR)mlx/init_textures.c \
 		$(SRCS_DIR)main.c \
-		$(SRCS_DIR)parsing/check_file.c \
+		$(SRCS_DIR)raycasting/cast_ray.c \
+		$(SRCS_DIR)raycasting/rayon.c \
+		$(SRCS_DIR)raycasting/test.c \
+		$(SRCS_DIR)mlx/init_move.c \
+		$(SRCS_DIR)mlx/init_rotate.c \
+		$(SRCS_DIR)mlx/init.keys.c \
+
+
 
 
 

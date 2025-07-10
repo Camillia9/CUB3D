@@ -28,42 +28,27 @@ int	init_mlx(t_data *data)
 	return (1);
 }
 
-int	handle_keypress(int keycode, t_data *data)
+void	init_player(t_player *player)
 {
-	if (keycode == 65307)
-		close_game(data);
-	if (keycode < 256)
-		data->keys[keycode] = 1;
-	return (0);
-}
+	// Position de départ (centre de la case où est P)
+	// ,5 pour qu'ils sit bien au milieu 
+	player->x = 7.5;
+	player->y = 2.5;
 
-int handle_keyrelease(int keycode, t_data *data)
-{
-	if (keycode < 256)
-		data->keys[keycode] = 0;
-	return (0);
-}
-
-void	handle_mouvement(t_data *data)
-{
-	static int	color = 0x000000;
-
-	if (data->keys[119]) // W
-		color = 0xFF0000;
-	if (data->keys[115]) // S
-		color = 0x00FF00;
-	if (data->keys[97])  // A
-		color = 0x0000FF;
-	if (data->keys[100]) // D
-		color = 0xFFFF00;
-	fill_screen(data, color); 
+	// Il regardera vers le nord
+	player->dir_x = 0.0;
+	player->dir_y = -1.0;
+	// Plan de projection (champ de vision ~60°)
+	player->plane_x = 0.66;
+	player->plane_y = 0.0;
+	// Vitesse
+	player->move_speed = 0.01;
+	player->rot_speed = 0.01;
 }
 
 int game_loop(t_data *data)
 {
 	handle_mouvement(data);
-	//clear_screen(data);
-	//ray casting
-	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+	handle_mouvement_2(data);
 	return (0);
 }
