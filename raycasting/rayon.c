@@ -32,9 +32,9 @@ static void	calculate_wall_height(t_ray *ray, int screen_height, int *draw_start
 static int	get_wall_color(t_ray *ray)
 {
 	if (ray->side == 0)
-		return (0xFF0000);
+		return (0xFF0000); // Rougle clair Est/Ouest
 	else
-		return (0x800000);
+		return (0x800000); // Rouge fonce: Nord/sud
 }
 
 static void	draw_column(t_data *data, int x, int draw_start, int draw_end, t_ray *ray)
@@ -48,11 +48,11 @@ static void	draw_column(t_data *data, int x, int draw_start, int draw_end, t_ray
 		char	*pixel;
 
 		if (y < draw_start)
-			color = 0x87CEEB;
+			color = 0x87CEEB; //ciel ou sol
 		else if (y <= draw_end)
 			color = get_wall_color(ray);
 		else
-			color = 0x228B22;
+			color = 0x228B22; // ciel ou sol
 		
 		pixel = data->mlx.img_data + (y * data->mlx.line_length + x * (data->mlx.bpp / 8));
 		*(unsigned int*)pixel = color;

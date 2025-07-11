@@ -28,28 +28,60 @@ int	init_mlx(t_data *data)
 	return (1);
 }
 
-void	init_player(t_player *player)
+void	init_direction(t_player *player, t_map *map)
+{
+	if (map->player_dir == 'N')
+	{
+		player->dir_x = 0.0;
+		player->dir_y = -1.0;
+		player->plane_x = 0.66;
+		player->plane_y = 0.0;
+	}
+	if (map->player_dir == 'S')
+	{
+		player->dir_x = 0.0;
+		player->dir_y = +1.0;
+		player->plane_x = -0.66;
+		player->plane_y = 0.0;
+	}
+	if (map->player_dir == 'W')
+	{
+		player->dir_x = -1.0;
+		player->dir_y = 0.0;
+		player->plane_x = 0.0;
+		player->plane_y = -0.66;
+	}
+	if (map->player_dir == 'E')
+	{
+		player->dir_x = +1.0;
+		player->dir_y = 0.0;
+		player->plane_x = 0.0;
+		player->plane_y = 0.66;
+	}
+}
+
+void init_map(t_data *data)
+{
+	// Initialisation manuelle de la position du joueur
+	data->map.player_x = 7;  // Position X du 'W' dans votre carte
+	data->map.player_y = 2;  // Position Y du 'W' dans votre carte  
+	data->map.player_dir = 'E';
+}
+
+void	init_player(t_player *player, t_map *map)
 {
 	// Position de départ (centre de la case où est P)
 	// ,5 pour qu'ils sit bien au milieu 
-	player->x = 10.5;
-	player->y = 1.5;
-
-	// Il regardera vers le nord
-	player->dir_x = 0.0;
-	player->dir_y = -1.0;
-	// Plan de projection (champ de vision ~60°)
-	player->plane_x = 0.66;
-	player->plane_y = 0.0;
+	player->x = map->player_x + 0.5;
+	player->y = map->player_y + 0.5;
+	
+	init_direction(player, map);
 	// Vitesse
 	player->move_speed = 0.01;
 	player->rot_speed = 0.01;
 }
 
-//void	init_direction(t_player *s_player)
-//{
-//	if ()
-//}
+
 int game_loop(t_data *data)
 {
 	handle_mouvement(data);

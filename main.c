@@ -7,7 +7,7 @@ int main(void)
 
     //validate_arguments(argc, argv);
 
-    validate_arguments(argc, argv);
+    //validate_arguments(argc, argv);
     // Allouer la structure principale
     data = malloc(sizeof(t_data));
     if (!data)
@@ -26,8 +26,9 @@ int main(void)
         printf("❌ Error: init_mlx failed\n");
         free(data);
         return (1);
-    } 
-    init_player(&data->player); 
+    }
+    init_map(data);
+    init_player(&data->player, &data->map); 
     render_frame(data);
 
     //fill_screen(data, 0x000000);  // Noir

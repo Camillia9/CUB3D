@@ -33,7 +33,7 @@ int game_loop(t_data *data);
 void fill_screen(t_data *data, int color);
 int	load_texture(t_data *data, t_texture *texture, char *path);
 int load_all_textures(t_data *data);
-void init_player(t_player *player);
+void init_player(t_player *player, t_map *map);
 void move_forward(t_data *data);
 void	move_backward(t_data *data);
 void	move_left(t_data *data);
@@ -52,6 +52,8 @@ void    render_frame(t_data *data);
 
 void cast_ray(t_ray *ray, double start_x, double start_y, double dir_x, double dir_y);
 void	render_scene(t_data *data);
+void	init_direction(t_player *player, t_map *map);
+void init_map(t_data *data);
 
 //check_file
 void print_error(const char *message);
