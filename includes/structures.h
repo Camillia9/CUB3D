@@ -1,6 +1,14 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
+enum e_texture_index
+{
+	NORTH = 1,
+	SOUTH = 2,
+	EAST = 3,
+	WEST = 4
+};
+
 //Strcutures
 typedef	struct	s_map
 {
@@ -115,6 +123,7 @@ typedef struct s_ray
 
 typedef struct s_data
 {
+	char		**file_content;
 	t_map		map;        // Données de la carte
 	t_player	player;     // Données du joueur
 	t_textures	textures;   // Toutes les textures

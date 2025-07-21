@@ -1,23 +1,19 @@
 #include "../includes/cub3d.h"
 #include <string.h>
 
-int main(void)
+int main(int argc, char **argv)
 {
     t_data *data;
 
-    //validate_arguments(argc, argv);
+    validate_arguments(argc, argv);
+    data = init_data();
+    data->file_content = read_entire_file(argv[1], data);
+	printf("✓ File read successfully\n");
+	parse_configuration(data);
+	printf("✓ Configuration parsed successfully\n");
+    print_config_data(data);
 
-    //validate_arguments(argc, argv);
-    // Allouer la structure principale
-    data = malloc(sizeof(t_data));
-    if (!data)
-    {
-        printf("❌ Error: malloc failed\n");
-        return (1);
-    }
-    
-    // Initialiser à zéro
-    memset(data, 0, sizeof(t_data));
+    validate_complete_map(data);
     // Tester init_mlx
     printf("🚀 Testing init_mlx...\n");
     
@@ -27,7 +23,7 @@ int main(void)
         free(data);
         return (1);
     }
-    init_map(data);
+    //init_map(data);
     init_player(&data->player, &data->map); 
     render_frame(data);
 
@@ -46,6 +42,8 @@ int main(void)
     // Lancer la boucle
     mlx_loop_hook(data->mlx.mlx, game_loop, data);
     mlx_loop(data->mlx.mlx);
+
+    free_data(data);
     return (0);
     
 }

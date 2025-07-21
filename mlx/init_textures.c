@@ -23,7 +23,7 @@ int	load_texture(t_data *data, t_texture *texture, char *path)
 
 int load_all_textures(t_data *data)
 {
-	if (!load_texture(data, &data->textures.north, "textures/north.xpm"))
+	if (!load_texture(data, &data->textures.north, data->textures.north_path))
 		return (0);
 	if (!load_texture(data, &data->textures.south, "textures/south.xmp"))
 		return (0);

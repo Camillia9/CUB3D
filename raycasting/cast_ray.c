@@ -47,7 +47,7 @@ static void	step_and_side(t_ray *ray, double start_x, double start_y)
     }
 }
 
-static void	algo_DDA(t_ray *ray)
+static void	algo_DDA(t_ray *ray, t_data *data)
 {
 	while (ray->hit_wall == 0)
 	{
@@ -65,17 +65,17 @@ static void	algo_DDA(t_ray *ray)
 			ray->side = 1;
 		}
 		// Vérifier si on a touché un mur
-		if (is_wall(ray->map_x, ray->map_y))
+		if (is_wall(data, ray->map_x, ray->map_y))
 			ray->hit_wall = 1;
 	}
 }
 // Fonction cast_ray corrigée
-void cast_ray(t_ray *ray, double start_x, double start_y, double dir_x, double dir_y)
+void cast_ray(t_ray *ray, double start_x, double start_y, double dir_x, double dir_y, t_data *data)
 {
 	init_ray(ray, start_x, start_y, dir_x, dir_y);
 	calculate_delta_distance(ray);
     step_and_side(ray, start_x, start_y);
-	algo_DDA(ray);
+	algo_DDA(ray, data);
 
     if (ray->side == 0)
         ray->distance = (ray->map_x - start_x + (1 - ray->step_x) / 2) / ray->dir_x;

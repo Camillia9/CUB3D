@@ -17,5 +17,30 @@ void print_config_data(t_data *data)
            data->colors.ceiling_r, data->colors.ceiling_g, data->colors.ceiling_b,
            data->colors.ceiling_color);
     printf("Screen size: %dx%d\n", data->screen_width, data->screen_height);
+    printf("height = %d\n", data->map.height);
+    printf("width = %d\n", data->map.width);
+    printf("file : \n");
+    print_map(data->file_content);
+    printf("map : \n");
+    print_map(data->map.grid);
+
     printf("============================\n");
+}
+
+void	print_map(char **map)
+{
+	int	i = 0;
+	int	j;
+
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			write(1, &map[i][j], 1);
+			j++;
+		}
+		write(1, "\n", 1);
+		i++;
+	}
 }

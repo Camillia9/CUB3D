@@ -16,6 +16,18 @@ SRCS =  $(SRCS_DIR)mlx/init_game.c \
 		$(SRCS_DIR)mlx/init_move.c \
 		$(SRCS_DIR)mlx/init_rotate.c \
 		$(SRCS_DIR)mlx/init.keys.c \
+		$(SRCS_DIR)parsing/init_data.c \
+		$(SRCS_DIR)parsing/check_file.c \
+		$(SRCS_DIR)parsing/free.c \
+		$(SRCS_DIR)parsing/read_file.c \
+		$(SRCS_DIR)parsing/parse_config.c \
+		$(SRCS_DIR)parsing/check_colors.c \
+		$(SRCS_DIR)parsing/check_texture.c \
+		$(SRCS_DIR)parsing/check_map.c \
+		$(SRCS_DIR)parsing/utils_map.c \
+		$(SRCS_DIR)parsing/parsing_utils.c \
+		$(SRCS_DIR)parsing/player.c \
+		$(SRCS_DIR)parsing/debug.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -34,7 +46,7 @@ all: mlx $(LIBFT) $(NAME)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	make -C $(LIBFT_DIR) bonus
 
 $(GET_NEXT_LINE):
 	make -C $(GET_NEXT_LINE_DIR)

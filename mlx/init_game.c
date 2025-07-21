@@ -60,13 +60,13 @@ void	init_direction(t_player *player, t_map *map)
 	}
 }
 
-void init_map(t_data *data)
-{
-	// Initialisation manuelle de la position du joueur
-	data->map.player_x = 7;  // Position X du 'W' dans votre carte
-	data->map.player_y = 2;  // Position Y du 'W' dans votre carte  
-	data->map.player_dir = 'E';
-}
+//void init_map(t_data *data)
+//{
+//	// Initialisation manuelle de la position du joueur
+//	data->map.player_x = 7;  // Position X du 'W' dans votre carte
+//	data->map.player_y = 2;  // Position Y du 'W' dans votre carte  
+//	data->map.player_dir = 'E';
+//}
 
 void	init_player(t_player *player, t_map *map)
 {

@@ -73,7 +73,7 @@ void	render_scene(t_data *data)
 		int		draw_end;
 
 		calculate_ray_direction(data, x, &dir_x, &dir_y);
-		cast_ray(&data->ray, data->player.x, data->player.y, dir_x, dir_y);
+		cast_ray(&data->ray, data->player.x, data->player.y, dir_x, dir_y, data);
 		calculate_wall_height(&data->ray, data->screen_height, &draw_start, &draw_end);
 		draw_column(data, x, draw_start, draw_end, &data->ray);
 		x++;

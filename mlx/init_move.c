@@ -8,9 +8,9 @@ void	move_forward(t_data *data)
 	new_x = data->player.x + data->player.dir_x * data->player.move_speed;
 	new_y = data->player.y + data->player.dir_y * data->player.move_speed;
 
-	if (!is_wall((int)new_x, (int)data->player.y))
+	if (!is_wall(data, (int)new_x, (int)data->player.y))
 		data->player.x = new_x;
-	if (!is_wall((int)data->player.x, (int)new_y))
+	if (!is_wall(data, (int)data->player.x, (int)new_y))
 		data->player.y = new_y;
 }
 
@@ -22,9 +22,9 @@ void	move_backward(t_data *data)
 	new_x = data->player.x - data->player.dir_x * data->player.move_speed;
 	new_y = data->player.y - data->player.dir_y * data->player.move_speed;
 
-	if (!is_wall((int)new_x, (int)data->player.y))
+	if (!is_wall(data, (int)new_x, (int)data->player.y))
 		data->player.x = new_x;
-	if (!is_wall((int)data->player.x, (int)new_y))
+	if (!is_wall(data, (int)data->player.x, (int)new_y))
 		data->player.y = new_y;
 }
 
@@ -36,9 +36,9 @@ void	move_left(t_data *data)
 	new_x = data->player.x + data->player.dir_y * data->player.move_speed;
 	new_y = data->player.y - data->player.dir_x * data->player.move_speed;
 
-	if (!is_wall((int)new_x, (int)data->player.y))
+	if (!is_wall(data, (int)new_x, (int)data->player.y))
 		data->player.x = new_x;
-	if (!is_wall((int)data->player.x, (int)new_y))
+	if (!is_wall(data, (int)data->player.x, (int)new_y))
 		data->player.y = new_y;
 }
 
@@ -50,8 +50,8 @@ void	move_right(t_data *data)
 	new_x = data->player.x - data->player.dir_y * data->player.move_speed;
 	new_y = data->player.y - (-data->player.dir_x) * data->player.move_speed;
 
-	if (!is_wall((int)new_x, (int)data->player.y))
+	if (!is_wall(data, (int)new_x, (int)data->player.y))
 		data->player.x = new_x;
-	if (!is_wall((int)data->player.x, (int)new_y))
+	if (!is_wall(data, (int)data->player.x, (int)new_y))
 		data->player.y = new_y;
 }

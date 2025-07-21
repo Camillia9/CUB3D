@@ -62,9 +62,11 @@
 /**
  * Affiche un message d'erreur formaté et termine le programme
  */
-void print_error(const char *message)
+
+void print_error(char *message, t_data *data)
 {
     printf("Error\n%s\n", message);
+    free_data(data);
     exit(1);
 }
 
@@ -111,19 +113,19 @@ void validate_arguments(int argc, char **argv)
     // Vérifier qu'il y a exactement 1 argument (+ le nom du programme = 2 total)
     if (argc != 2)
     {
-        print_error("Usage: ./cub3d <map.cub>");
+        print_error("Usage: ./cub3d <map.cub>", NULL);
     }
     
     // Vérifier l'extension du fichier
     if (!check_file_extension(argv[1]))
     {
-        print_error("Map file must have .cub extension");
+        print_error("Map file must have .cub extension", NULL);
     }
     
     // Vérifier que le fichier existe et est lisible
     if (!check_file_access(argv[1]))
     {
-        print_error("Cannot open map file: file does not exist or is not readable");
+        print_error("Cannot open map file: file does not exist or is not readable", NULL);
     }
     
     printf("✓ Arguments validation successful!\n");
