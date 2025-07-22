@@ -14,10 +14,14 @@ static void	calculate_wall_height(t_ray *ray, int screen_height, int *draw_start
 	int	wall_height;
 	int	screen_center;
 
-	if (ray->perp_wall_dist < 0.01)
-		ray->perp_wall_dist = 0.01;
+	if (ray->perp_wall_dist < 0.001)
+		ray->perp_wall_dist = 0.001;
 
-	wall_height = (int)(screen_height / ray->distance);
+	wall_height = (int)(screen_height / ray->perp_wall_dist);
+
+	if (wall_height > screen_height * 10)
+		wall_height = screen_height * 10;
+
 	screen_center = screen_height / 2;
 	*draw_start = screen_center - wall_height / 2;
 	*draw_end = screen_center + wall_height / 2;
@@ -46,20 +50,20 @@ static int	calcul_tex_x(t_ray *ray, t_texture *texture, double start_x, double s
 	
 	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
 		tex_x = texture->width - tex_x - 1;
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= texture->width)
-		tex_x = texture->width - 1;
+    if (tex_x < 0) tex_x = 0;
+    if (tex_x >= texture->width) tex_x = texture->width - 1;
 	return (tex_x);
 }
 
 static int	get_wall_texture(t_ray *ray, t_data *data, int y, int draw_start, int draw_end)
 {
+	(void)draw_start;
+	(void)draw_end;
 	t_texture	*texture;
 	int			tex_y;
 	int			tex_x;
 	int			color;
-	int			wall_height;
+	//int			wall_height;
 
 	if (ray->side == 0) // Mur vertical
 	{
@@ -75,13 +79,22 @@ static int	get_wall_texture(t_ray *ray, t_data *data, int y, int draw_start, int
 		else
 			texture = &data->textures.north;
 	}
-	wall_height = draw_end - draw_start;
-	tex_y = ((y - draw_start) * texture->height) / wall_height;
+
+
+	//wall_height = draw_end - draw_start;
+	//if (wall_height <= 0) wall_height = 1;
+
+    int real_wall_height = (int)(data->screen_height / ray->perp_wall_dist);
+    int screen_center = data->screen_height / 2;
+    int real_draw_start = screen_center - real_wall_height / 2;
+
+	//tex_y = ((y - draw_start) * texture->height) / wall_height;
+	tex_y = ((y - real_draw_start) * texture->height) / real_wall_height;
+
+    if (tex_y < 0) tex_y = 0;
+    if (tex_y >= texture->height) tex_y = texture->height - 1;
+
 	tex_x = calcul_tex_x(ray, texture, data->player.x, data->player.y);
-	if (tex_y < 0)
-		tex_y = 0;
-	if (tex_y >= texture->height)
-		tex_y = texture->height - 1;
 
 	char *pixel = texture->data + (tex_y * texture->line_length + tex_x * (texture->bpp / 8));
 	color = *(int*)pixel;

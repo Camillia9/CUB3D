@@ -86,7 +86,7 @@ void cast_ray(t_ray *ray, double start_x, double start_y, double dir_x, double d
         ray->perp_wall_dist = (ray->map_y - start_y + (1 - ray->step_y) / 2) / ray->dir_y;
 	}
 	// Protection distance minimal (au cas ou probleme, ici pas fonctionnel)
-	if (ray->perp_wall_dist < 0.001)
+	if (ray->perp_wall_dist <= 0.001)
         ray->perp_wall_dist = 0.001;
 	
 	ray->distance = ray->perp_wall_dist;

@@ -77,8 +77,8 @@ void	init_player(t_player *player, t_map *map)
 	
 	init_direction(player, map);
 	// Vitesse
-	player->move_speed = 0.01;
-	player->rot_speed = 0.01;
+	player->move_speed = 0.05;
+	player->rot_speed = 0.03;
 }
 
 
