@@ -24,7 +24,14 @@ int main(int argc, char **argv)
         return (1);
     }
     //init_map(data);
-    init_player(&data->player, &data->map); 
+    init_player(&data->player, &data->map);
+
+    if (!load_all_textures(data))
+    {
+        printf("❌ Error: Failed to load textures\n");
+        close_game(data);
+        return (1);
+    }
     render_frame(data);
 
     //fill_screen(data, 0x000000);  // Noir

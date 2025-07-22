@@ -77,15 +77,19 @@ void cast_ray(t_ray *ray, double start_x, double start_y, double dir_x, double d
     step_and_side(ray, start_x, start_y);
 	algo_DDA(ray, data);
 
-    if (ray->side == 0)
-        ray->distance = (ray->map_x - start_x + (1 - ray->step_x) / 2) / ray->dir_x;
-    else
-        ray->distance = (ray->map_y - start_y + (1 - ray->step_y) / 2) / ray->dir_y;
-
-		// Protection distance minimal (au cas ou probleme, ici pas fonctionnel)
-	//if (ray->distance < 0.01)
-    //    ray->distance = 0.01;
+    if (ray->side == 0) // Mur vertical (NS)
+    {
+		ray->perp_wall_dist = (ray->map_x - start_x + (1 - ray->step_x) / 2) / ray->dir_x;
+	}
+    else // Mur horizontaux (EW)
+	{
+        ray->perp_wall_dist = (ray->map_y - start_y + (1 - ray->step_y) / 2) / ray->dir_y;
+	}
+	// Protection distance minimal (au cas ou probleme, ici pas fonctionnel)
+	if (ray->perp_wall_dist < 0.001)
+        ray->perp_wall_dist = 0.001;
 	
+	ray->distance = ray->perp_wall_dist;
     ray->wall_x = ray->map_x;
     ray->wall_y = ray->map_y;
 }

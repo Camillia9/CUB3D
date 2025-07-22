@@ -14,12 +14,11 @@ static void	calculate_wall_height(t_ray *ray, int screen_height, int *draw_start
 	int	wall_height;
 	int	screen_center;
 
-	if (ray->distance < 0.1)
-		ray->distance = 0.1;
+	if (ray->perp_wall_dist < 0.01)
+		ray->perp_wall_dist = 0.01;
 
 	wall_height = (int)(screen_height / ray->distance);
 	screen_center = screen_height / 2;
-
 	*draw_start = screen_center - wall_height / 2;
 	*draw_end = screen_center + wall_height / 2;
 	
@@ -29,12 +28,64 @@ static void	calculate_wall_height(t_ray *ray, int screen_height, int *draw_start
 		*draw_end = screen_height - 1;
 }
 
-static int	get_wall_color(t_ray *ray)
+static int	calcul_tex_x(t_ray *ray, t_texture *texture, double start_x, double start_y)
 {
+	double	wall_x;
+	int		tex_x;
+
 	if (ray->side == 0)
-		return (0xFF0000); // Rougle clair Est/Ouest
+		wall_x = start_y + ray->distance * ray->dir_y;
 	else
-		return (0x800000); // Rouge fonce: Nord/sud
+		wall_x = start_x + ray->distance * ray->dir_x;
+
+	wall_x = (wall_x - 1) * -1;
+		
+	wall_x = wall_x - floor(wall_x);
+
+	tex_x = (int)(wall_x * texture->width);
+	
+	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
+		tex_x = texture->width - tex_x - 1;
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= texture->width)
+		tex_x = texture->width - 1;
+	return (tex_x);
+}
+
+static int	get_wall_texture(t_ray *ray, t_data *data, int y, int draw_start, int draw_end)
+{
+	t_texture	*texture;
+	int			tex_y;
+	int			tex_x;
+	int			color;
+	int			wall_height;
+
+	if (ray->side == 0) // Mur vertical
+	{
+		if (ray->dir_x > 0)
+			texture = &data->textures.east;
+		else
+			texture = &data->textures.west;
+	}
+	else // Mur horizontaux
+	{
+		if (ray->dir_y > 0)
+			texture = &data->textures.south;
+		else
+			texture = &data->textures.north;
+	}
+	wall_height = draw_end - draw_start;
+	tex_y = ((y - draw_start) * texture->height) / wall_height;
+	tex_x = calcul_tex_x(ray, texture, data->player.x, data->player.y);
+	if (tex_y < 0)
+		tex_y = 0;
+	if (tex_y >= texture->height)
+		tex_y = texture->height - 1;
+
+	char *pixel = texture->data + (tex_y * texture->line_length + tex_x * (texture->bpp / 8));
+	color = *(int*)pixel;
+	return (color);
 }
 
 static void	draw_column(t_data *data, int x, int draw_start, int draw_end, t_ray *ray)
@@ -48,11 +99,11 @@ static void	draw_column(t_data *data, int x, int draw_start, int draw_end, t_ray
 		char	*pixel;
 
 		if (y < draw_start)
-			color = 0x87CEEB; //ciel ou sol
+			color = 0x87CEEB; //ciel
 		else if (y <= draw_end)
-			color = get_wall_color(ray);
+			color = get_wall_texture(ray, data, y, draw_start, draw_end);
 		else
-			color = 0x228B22; // ciel ou sol
+			color = 0x228B22; // sol
 		
 		pixel = data->mlx.img_data + (y * data->mlx.line_length + x * (data->mlx.bpp / 8));
 		*(unsigned int*)pixel = color;
