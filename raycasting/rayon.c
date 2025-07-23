@@ -1,38 +1,37 @@
 #include "../includes/cub3d.h"
 
-static void	calculate_ray_direction(t_data *data, int x, double *dir_x, double *dir_y)
+static void	calculate_ray_direction(t_data *data, int x,
+		double *dir_x, double *dir_y)
 {
-	double camera_x;
+	double	camera_x;
 
 	camera_x = 2.0 * x / (double)data->screen_width - 1.0;
 	*dir_x = data->player.dir_x + data->player.plane_x * camera_x;
 	*dir_y = data->player.dir_y + data->player.plane_y * camera_x;
 }
 
-static void	calculate_wall_height(t_ray *ray, int screen_height, int *draw_start, int *draw_end)
+static void	calculate_wall_height(t_ray *ray, int screen_height,
+	int *draw_start, int *draw_end)
 {
 	int	wall_height;
 	int	screen_center;
 
 	if (ray->perp_wall_dist < 0.001)
 		ray->perp_wall_dist = 0.001;
-
 	wall_height = (int)(screen_height / ray->perp_wall_dist);
-
 	if (wall_height > screen_height * 10)
 		wall_height = screen_height * 10;
-
 	screen_center = screen_height / 2;
 	*draw_start = screen_center - wall_height / 2;
 	*draw_end = screen_center + wall_height / 2;
-	
 	if (*draw_start < 0)
 		*draw_start = 0;
 	if (*draw_end >= screen_height)
 		*draw_end = screen_height - 1;
 }
 
-static int	calcul_tex_x(t_ray *ray, t_texture *texture, double start_x, double start_y)
+static int	calcul_tex_x(t_ray *ray, t_texture *texture,
+	double start_x, double start_y)
 {
 	double	wall_x;
 	int		tex_x;
@@ -41,17 +40,16 @@ static int	calcul_tex_x(t_ray *ray, t_texture *texture, double start_x, double s
 		wall_x = start_y + ray->distance * ray->dir_y;
 	else
 		wall_x = start_x + ray->distance * ray->dir_x;
-
 	wall_x = (wall_x - 1) * -1;
-		
 	wall_x = wall_x - floor(wall_x);
-
 	tex_x = (int)(wall_x * texture->width);
-	
-	if ((ray->side == 0 && ray->dir_x > 0) || (ray->side == 1 && ray->dir_y < 0))
+	if ((ray->side == 0 && ray->dir_x > 0)
+		|| (ray->side == 1 && ray->dir_y < 0))
 		tex_x = texture->width - tex_x - 1;
-    if (tex_x < 0) tex_x = 0;
-    if (tex_x >= texture->width) tex_x = texture->width - 1;
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= texture->width)
+		tex_x = texture->width - 1;
 	return (tex_x);
 }
 
@@ -80,10 +78,6 @@ static int	get_wall_texture(t_ray *ray, t_data *data, int y, int draw_start, int
 			texture = &data->textures.north;
 	}
 
-
-	//wall_height = draw_end - draw_start;
-	//if (wall_height <= 0) wall_height = 1;
-
     int real_wall_height = (int)(data->screen_height / ray->perp_wall_dist);
     int screen_center = data->screen_height / 2;
     int real_draw_start = screen_center - real_wall_height / 2;
@@ -103,44 +97,43 @@ static int	get_wall_texture(t_ray *ray, t_data *data, int y, int draw_start, int
 
 static void	draw_column(t_data *data, int x, int draw_start, int draw_end, t_ray *ray)
 {
-	int y;
+	int		y;
+	int		color;
+	char	*pixel;
 
 	y = 0;
 	while (y < data->screen_height)
 	{
-		int 	color;
-		char	*pixel;
-
 		if (y < draw_start)
-			color = 0x87CEEB; //ciel
+			color = 0x87CEEB;
 		else if (y <= draw_end)
 			color = get_wall_texture(ray, data, y, draw_start, draw_end);
 		else
-			color = 0x228B22; // sol
-		
-		pixel = data->mlx.img_data + (y * data->mlx.line_length + x * (data->mlx.bpp / 8));
-		*(unsigned int*)pixel = color;
+			color = 0x228B22;
+		pixel = data->mlx.img_data + (y * data->mlx.line_length
+				+ x * (data->mlx.bpp / 8));
+		*(unsigned int *)pixel = color;
 		y++;
 	}
 }
 
 void	render_scene(t_data *data)
 {
-	int x;
+	int		x;
+	double	dir_x;
+	double	dir_y;
+	int		draw_start;
+	int		draw_end;
 
 	x = 0;
 	while (x < data->screen_width)
 	{
-		double 	dir_x;
-		double	dir_y;
-		int		draw_start;
-		int		draw_end;
-
 		calculate_ray_direction(data, x, &dir_x, &dir_y);
-		cast_ray(&data->ray, data->player.x, data->player.y, dir_x, dir_y, data);
-		calculate_wall_height(&data->ray, data->screen_height, &draw_start, &draw_end);
+		cast_ray(&data->ray, data->player.x, data->player.y,
+			dir_x, dir_y, data);
+		calculate_wall_height(&data->ray, data->screen_height,
+			&draw_start, &draw_end);
 		draw_column(data, x, draw_start, draw_end, &data->ray);
 		x++;
 	}
 }
-

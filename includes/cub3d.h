@@ -123,9 +123,8 @@ void    render_frame(t_data *data);
 
 void cast_ray(t_ray *ray, double start_x, double start_y, double dir_x, double dir_y, t_data *data);
 void	render_scene(t_data *data);
-void	init_direction(t_player *player, t_map *map);
-void init_map(t_data *data);
-
+void	init_direction_ns(t_player *player, t_map *map);
+void	init_direction_ew(t_player *player, t_map *map);
 
 
 //check_texture
