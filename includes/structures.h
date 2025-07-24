@@ -20,6 +20,20 @@ typedef	struct	s_map
 	char	player_dir;     // Direction initiale ('N', 'S', 'E', 'W')
 }	t_map;
 
+typedef struct s_ray_params
+{
+	double	start_x;
+	double	start_y;
+	double	dir_x;
+	double	dir_y;
+}	t_ray_params;
+
+typedef struct s_draw_range
+{
+	int	start;
+	int	end;
+}	t_draw_range;
+
 typedef struct s_player
 {
 	double	x;              // Position X dans le monde (coordonnées réelles)

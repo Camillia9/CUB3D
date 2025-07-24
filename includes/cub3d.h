@@ -121,11 +121,15 @@ void	print_map(char **map);
 int is_wall(t_data *data, int x, int y);
 void    render_frame(t_data *data);
 
-void cast_ray(t_ray *ray, double start_x, double start_y, double dir_x, double dir_y, t_data *data);
+void cast_ray(t_ray *ray, t_ray_params *params, t_data *data);
 void	render_scene(t_data *data);
 void	init_direction_ns(t_player *player, t_map *map);
 void	init_direction_ew(t_player *player, t_map *map);
 
+t_texture	*select_wall_texture(t_ray *ray, t_data *data);
+int	calcul_tex_x(t_ray *ray, t_texture *texture, double start_x,
+		double start_y);
+int	calculate_tex_y(t_ray *ray, t_data *data, int y, t_texture *texture);
 
 //check_texture
 int check_texture_file(char *path);
