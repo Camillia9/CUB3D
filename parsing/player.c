@@ -1,13 +1,17 @@
 #include "../includes/cub3d.h"
 
+/**
+ * Vérifie si un caractère est une direction de joueur
+ */
+int	is_player_char(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
 void	find_player_position(t_data *data, int *x, int *y)
 {
-	//int	i;
-	//int	j;
-
 	*x = 0;
 	*y = 0;
-	//i = 0;
 	while (*y < data->map.height)
 	{
 		if (!data->map.grid[*y])

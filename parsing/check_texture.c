@@ -310,15 +310,19 @@ void	parse_texture(t_data *data, char *line)
 char	*fill_line(char *line, int width, t_data *data)
 {
 	char	*new;
+	 int original_len;
 	int		i;
     
     i = 0;
     new = safe_malloc(data, width + 1);
-	while (line[i])
-	{
+	original_len = ft_strlen(line);
+    if (original_len > 0 && line[original_len - 1] == '\n')
+        original_len--; // ← Ne pas copier le \n
+	 while (i < original_len)
+    {
         new[i] = line[i];
-		i++;
-	}
+        i++;
+    }
 	while (i < width)
 		new[i++] = '2';
 	new[i] = '\0';

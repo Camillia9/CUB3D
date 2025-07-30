@@ -3,31 +3,29 @@
 /**
  * Libère la mémoire des chemins de textures
  */
-void free_textures(t_textures *textures)
+void	free_textures(t_textures *textures)
 {
-    if (textures->north_path)
-    {
-        free(textures->north_path);
-        textures->north_path = NULL;
-    }
-    if (textures->south_path)
-    {
-        free(textures->south_path);
-        textures->south_path = NULL;
-    }
-    if (textures->west_path)
-    {
-        free(textures->west_path);
-        textures->west_path = NULL;
-    }
-    if (textures->east_path)
-    {
-        free(textures->east_path);
-        textures->east_path = NULL;
-    }
+	if (textures->north_path)
+	{
+		free(textures->north_path);
+		textures->north_path = NULL;
+	}
+	if (textures->south_path)
+	{
+		free(textures->south_path);
+		textures->south_path = NULL;
+	}
+	if (textures->west_path)
+	{
+		free(textures->west_path);
+		textures->west_path = NULL;
+	}
+	if (textures->east_path)
+	{
+		free(textures->east_path);
+		textures->east_path = NULL;
+	}
 }
-
-
 
 void	free_data(t_data *data)
 {
@@ -35,7 +33,7 @@ void	free_data(t_data *data)
 		return ;
 	free_textures(&data->textures);
 	free_map(&data->map);
-    free_file_content_from_data(data); 
+	free_file_content_from_data(data); 
 	free(data);
 }
 

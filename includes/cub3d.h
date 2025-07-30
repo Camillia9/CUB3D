@@ -74,6 +74,8 @@ int	check_xpm_extension(char *filename);
 //check map
 void	validate_complete_map(t_data *data);
 void	validate_map_basic(t_data *data);
+//int	validate_complete_map(t_data *data);
+//int	validate_map_basic(t_data *data);
 int	validate_map_closure(t_data *data);
 char	**dupplicate_grid(t_map *map);
 int	flood_fill(char **grid, int x, int y, t_map *map);
@@ -82,7 +84,7 @@ int	flood_fill(char **grid, int x, int y, t_map *map);
 void	*safe_malloc(t_data *data, size_t size);
 int	is_valid_map_line(char *line);
 void	count_map_elements(t_data *data, int *player_count, int *empty_spaces);
-int is_player_char(char c);
+
 
 //parsing utils
 int is_texture_line(char *line);
@@ -90,22 +92,27 @@ int is_color_line(char *line);
 char *skip_whitespace(char *line);
 int is_empty_line(char *line);
 int identify_texture_type(char *line, t_data *data);
-char *extract_texture_path(char *line, int texture_type, t_data *data);
+char *extract_texture_path(char *line, t_data *data);
 void assign_texture_to_data(t_data *data, char *path, int texture_type);
 int parse_texture_line(char *line, t_data *data);
 int check_config_complete(t_data *data);
 char *trim_whitespace(char *str);
 
-//check colors
-int parse_rgb_value(char **str);
-int encode_rgb_color(int r, int g, int b);
-int identify_color_type(char *line, t_data *data);
-void assign_rgb_values(t_data *data, int r, int g, int b, int color_type);
-void parse_rgb_values(char *color_start, t_data *data, int color_type);
-int parse_color_line(char *line, t_data *data);
+//parse colors
+int		parse_rgb_value(char **str);
+int		identify_color_type(char *line, t_data *data);
+void	parse_rgb_values(char *color_start, t_data *data, int color_type);
+int		parse_color_line(char *line, t_data *data);
+
+//fill colors
+void	assign_rgb_values(t_data *data, int rgb[3], int color_type);
+void	assign_floor_color(t_data *data, int rgb[3]);
+void	assign_ceiling_color(t_data *data, int rgb[3]);
+int		encode_rgb_color(int r, int g, int b);
 
 //player
 void	find_player_position(t_data *data, int *x, int *y);
+int is_player_char(char c);
 
 //free
 void	free_textures(t_textures *textures);
@@ -130,6 +137,13 @@ void	init_direction_ew(t_player *player, t_map *map);
 //check_texture
 int check_texture_file(char *path);
 void parse_texture(t_data *data, char *line);
+
+char *remove_newline(char *line, t_data *data);
+char	*safe_strdup(t_data *data, const char *str);
+
+
+//check_map2
+//int	validate_map_closure(t_data *data);
 
 
 #endif

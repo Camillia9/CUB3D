@@ -32,17 +32,17 @@ static int	find_map_start_index(t_data *data)
 	while (data->file_content[i])
 	{
 		if (!data->file_content[i])
-			break;
+			break ;
 		trimmed = trim_whitespace(data->file_content[i]);
 		if (is_empty_line(trimmed))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		if (parse_config_element(trimmed, data))
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		if (check_config_complete(data) && is_valid_map_line(trimmed))
 			return (i);
@@ -53,6 +53,7 @@ static int	find_map_start_index(t_data *data)
 
 /**
  * Calcule les dimensions de la map
+ * Exclure le \n du calcul
  */
 static void	calculate_map_dimensions(char **map_lines, t_data *data)
 {
@@ -65,15 +66,18 @@ static void	calculate_map_dimensions(char **map_lines, t_data *data)
 	i = 0;
 	while (map_lines[i])
 	{
-		trimmed = trim_whitespace(map_lines[i]);
-		if (is_empty_line(trimmed))
-		{
-			print_error("erreur map\n", data);
-			//break ;
-		}
+		//trimmed = trim_whitespace(map_lines[i]);
+		trimmed = map_lines[i];
+		//if (is_empty_line(trimmed))
+		//{
+		//	print_error("erreur map\n", data);
+		//	//break ;
+		//}
 		if (!is_valid_map_line(trimmed))
 			print_error("Invalid character in map", data);
 		line_len = ft_strlen(trimmed);
+		 if (line_len > 0 && trimmed[line_len - 1] == '\n')
+            line_len--;
 		if (line_len > data->map.width)
 			data->map.width = line_len;
 		data->map.height++;
@@ -127,13 +131,13 @@ void	parse_configuration(t_data *data)
 	parse_map_from_lines(data->file_content + map_start_index, data);
 }
 
-/**
- * Fonction principale qui remplace read_and_parse_config
- */
-void	read_and_parse_config(t_data *data, char *filename)
-{
-	data->file_content = read_entire_file(filename, data);
-	printf("✓ File read successfully\n");
-	parse_configuration(data);
-	printf("✓ Configuration parsed successfully\n");
-}
+///**
+// * Fonction principale qui remplace read_and_parse_config
+// */
+//void	read_and_parse_config(t_data *data, char *filename)
+//{
+//	data->file_content = read_entire_file(filename, data);
+//	printf("✓ File read successfully\n");
+//	parse_configuration(data);
+//	printf("✓ Configuration parsed successfully\n");
+//}

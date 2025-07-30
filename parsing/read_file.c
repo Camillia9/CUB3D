@@ -10,10 +10,11 @@ static t_list	*read_lines_to_list(int fd)
 	char	*line;
 
 	temp_lines = NULL;
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		//remove_newline(line);
 		ft_lstadd_back(&temp_lines, ft_lstnew(line));
+		line = get_next_line(fd);
 	}
 	return (temp_lines);
 }
@@ -27,13 +28,13 @@ static char	**convert_list_to_array(t_list *temp_lines, int line_count, t_data *
 	t_list	*current;
 	int		i;
 
-	file_content = safe_malloc(data, sizeof(char *) * (line_count + 1));
+	file_content = malloc(sizeof(char *) * (line_count + 1));
+	if (!file_content)
+		print_error("Memory allocation failed", NULL);
 	current = temp_lines;
 	i = 0;
 	while (current && i < line_count)
 	{
-		//if (!current->content)
-		//	print_error("Invalid file content", data);
 		file_content[i] = ft_strdup((char *)current->content);
 		if (!file_content[i])
 			print_error("Memory allocation failed for file content", data);
@@ -43,6 +44,7 @@ static char	**convert_list_to_array(t_list *temp_lines, int line_count, t_data *
 	file_content[i] = NULL;
 	return (file_content);
 }
+
 /**
  * Lit entièrement le fichier et retourne un tableau de lignes
  */
@@ -61,11 +63,6 @@ char	**read_entire_file(char *filename, t_data *data)
 	if (!temp_lines)
 		print_error("Empty or invalid file", data);
 	line_count = ft_lstsize(temp_lines);
-	if (line_count == 0)
-	{
-		ft_lstclear(&temp_lines, free);
-		print_error("File contains no lines", data);
-	}
 	file_content = convert_list_to_array(temp_lines, line_count, data);
 	ft_lstclear(&temp_lines, free);
 	return (file_content);
