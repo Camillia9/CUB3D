@@ -1,4 +1,4 @@
-SO ./textures/pigeon.xpm
+SO           ./textures/pigeon.xpm
 WE ./textures/texture.xpm
 EA ./textures/texture.xpm
 NO ./textures/pigeon.xpm
@@ -7,6 +7,10 @@ F 93, 203, 75
 C 5, 160, 218
 
 111111111111
-1000101000N1
-10000100111
-111111110
+1000101000N01
+10000100100011
+1000010000111
+11111 1111  
+11111111111
+            111111
+

@@ -13,7 +13,7 @@ void	print_error(char *message, t_data *data)
 /**
  * Vérifie que le fichier a l'extension .cub
  */
-int	check_file_extension(char *filename)
+static int	check_file_extension(char *filename)
 {
 	int	len;
 

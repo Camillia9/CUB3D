@@ -8,29 +8,26 @@ int	is_player_char(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-void	find_player_position(t_data *data, int *x, int *y)
+void	find_player_position(t_data *data)
 {
-	*x = 0;
-	*y = 0;
-	while (*y < data->map.height)
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < data->map.height)
 	{
-		if (!data->map.grid[*y])
+		x = 0;
+		while (x < data->map.width && data->map.grid[y][x])
 		{
-			(*y)++;
-			continue;
-		}
-		*x = 0;
-		while (data->map.grid[*y][*x])
-		{
-			if (is_player_char(data->map.grid[*y][*x]))
+			if (is_player_char(data->map.grid[y][x]))
 			{
-				data->map.player_x = *x;
-				data->map.player_y = *y;
-				data->map.player_dir = data->map.grid[*y][*x];
-				return;
+				data->map.player_x = x;
+				data->map.player_y = y;
+				data->map.player_dir = data->map.grid[y][x];
+				return ;
 			}
-			(*x)++;
+			x++;
 		}
-		(*y)++;
+		y++;
 	}
 }

@@ -48,40 +48,38 @@ void free_all_textures(t_data *data);
 
 //init data
 t_data	*init_data(void);
-void	init_default_values(t_data *data);
-int count_lines(const char *filename);
-char **read_file_into_array(const char *filename);
+
+//read file
+void	parse_file(t_data *data, char *filename);
+
+//parse config
+int	is_map_line(char *line);
+int check_config_complete(t_data *data);
+int	parse_config_section(t_data *data);
+
+
+void	parse_map_section(t_data *data, int start_index);
+void allocate_map_grid(t_data *data);
+
+void	validate_map(t_data *data);
+int	validate_map_closure(t_data *data);
+void	free_temp_grid(char **grid, int height);
+char	**duplicate_grid(t_data *data);
+int	flood_fill_check(char **grid, int x, int y, t_data *data);
+int	get_line_length_without_newline(char *line);
 
 //check_file
 void print_error(char *message, t_data *data);
-int check_file_extension(char *filename);
+//int check_file_extension(char *filename);
 int check_file_access(char *filename);
 void validate_arguments(int argc, char **argv);
 
-//parse_config
-void	read_and_parse_config(t_data *data, char *filename);
-void	parse_configuration(t_data *data);
-void	parse_map_from_lines(char **map_lines, t_data *data);
-
-//read_file
-char	**read_entire_file(char *filename, t_data *data);
-void	free_file_content(char **file_content);
-
-//check_texture
-char	*fill_line(char *line, int width, t_data *data);
-int	check_xpm_extension(char *filename);
-
 //check map
-void	validate_complete_map(t_data *data);
-void	validate_map_basic(t_data *data);
-//int	validate_complete_map(t_data *data);
-//int	validate_map_basic(t_data *data);
 int	validate_map_closure(t_data *data);
-char	**dupplicate_grid(t_map *map);
-int	flood_fill(char **grid, int x, int y, t_map *map);
+
 
 //utils map
-void	*safe_malloc(t_data *data, size_t size);
+
 int	is_valid_map_line(char *line);
 void	count_map_elements(t_data *data, int *player_count, int *empty_spaces);
 
@@ -89,14 +87,17 @@ void	count_map_elements(t_data *data, int *player_count, int *empty_spaces);
 //parsing utils
 int is_texture_line(char *line);
 int is_color_line(char *line);
+char *trim_whitespace(char *str);
 char *skip_whitespace(char *line);
 int is_empty_line(char *line);
+void	*safe_malloc(t_data *data, size_t size);
+
 int identify_texture_type(char *line, t_data *data);
 char *extract_texture_path(char *line, t_data *data);
 void assign_texture_to_data(t_data *data, char *path, int texture_type);
 int parse_texture_line(char *line, t_data *data);
-int check_config_complete(t_data *data);
-char *trim_whitespace(char *str);
+
+
 
 //parse colors
 int		parse_rgb_value(char **str);
@@ -111,7 +112,8 @@ void	assign_ceiling_color(t_data *data, int rgb[3]);
 int		encode_rgb_color(int r, int g, int b);
 
 //player
-void	find_player_position(t_data *data, int *x, int *y);
+void	find_player_position(t_data *data);
+//void	find_player_position(t_data *data, int *x, int *y);
 int is_player_char(char c);
 
 //free
@@ -141,13 +143,6 @@ int	calculate_tex_y(t_ray *ray, t_data *data, int y, t_texture *texture);
 //check_texture
 int check_texture_file(char *path);
 void parse_texture(t_data *data, char *line);
-
-char *remove_newline(char *line, t_data *data);
-char	*safe_strdup(t_data *data, const char *str);
-
-
-//check_map2
-//int	validate_map_closure(t_data *data);
 
 
 #endif

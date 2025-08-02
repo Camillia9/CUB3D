@@ -27,9 +27,9 @@ void	assign_ceiling_color(t_data *data, int rgb[3])
  */
 void	assign_rgb_values(t_data *data, int rgb[3], int color_type)
 {
-	if (color_type == 1) // Floor
+	if (color_type == 1)
 		assign_floor_color(data, rgb);
-	else if (color_type == 2) // Ceiling
+	else if (color_type == 2)
 		assign_ceiling_color(data, rgb);
 }
 

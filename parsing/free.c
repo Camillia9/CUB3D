@@ -33,7 +33,7 @@ void	free_data(t_data *data)
 		return ;
 	free_textures(&data->textures);
 	free_map(&data->map);
-	free_file_content_from_data(data); 
+	free_file_content_from_data(data);
 	free(data);
 }
 

@@ -23,8 +23,9 @@ SRCS =  $(SRCS_DIR)mlx/init_game.c \
 		$(SRCS_DIR)parsing/parse_config.c \
 		$(SRCS_DIR)parsing/parse_colors.c \
 		$(SRCS_DIR)parsing/fill_colors.c \
-		$(SRCS_DIR)parsing/check_texture.c \
-		$(SRCS_DIR)parsing/check_map.c \
+		$(SRCS_DIR)parsing/parse_texture.c \
+		$(SRCS_DIR)parsing/parse_map.c \
+		$(SRCS_DIR)parsing/parse_map_closure.c \
 		$(SRCS_DIR)parsing/utils_map.c \
 		$(SRCS_DIR)parsing/parsing_utils.c \
 		$(SRCS_DIR)parsing/player.c \
