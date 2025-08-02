@@ -1,5 +1,10 @@
 #include "../includes/cub3d.h"
 
+int	is_color_line(char *line)
+{
+	return (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0);
+}
+
 /**
  * Parse une valeur RGB (0-255)
  * Ignorer les espaces

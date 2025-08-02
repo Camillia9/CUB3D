@@ -60,6 +60,7 @@ int	parse_config_section(t_data *data);
 
 void	parse_map_section(t_data *data, int start_index);
 void allocate_map_grid(t_data *data);
+void	fill_map_grid(t_data *data, int start);
 
 void	validate_map(t_data *data);
 int	validate_map_closure(t_data *data);
@@ -96,6 +97,7 @@ int identify_texture_type(char *line, t_data *data);
 char *extract_texture_path(char *line, t_data *data);
 void assign_texture_to_data(t_data *data, char *path, int texture_type);
 int parse_texture_line(char *line, t_data *data);
+
 
 
 

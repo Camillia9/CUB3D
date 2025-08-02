@@ -1,16 +1,5 @@
 #include "../includes/cub3d.h"
 
-int	is_texture_line(char *line)
-{
-	return (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
-		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0);
-}
-
-int	is_color_line(char *line)
-{
-	return (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0);
-}
-
 /**
  * Supprime les espaces en début et fin de chaîne
  */

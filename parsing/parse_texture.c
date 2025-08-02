@@ -1,5 +1,11 @@
 #include "../includes/cub3d.h"
 
+int	is_texture_line(char *line)
+{
+	return (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0
+		|| ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0);
+}
+
 /**
  * Identifie le type de texture et vérifie les doublons
  */
@@ -30,40 +36,6 @@ int	identify_texture_type(char *line, t_data *data)
 		return (EAST);
 	}
 	return (0);
-}
-
-/**
- * Extrait le chemin de la texture depuis la ligne
- * Vérifier qu'il n'y a pas de caractères supplémentaires après le chemin
- */
-char	*extract_texture_path(char *line, t_data *data)
-{
-	char	*path_start;
-	char	*path_end;
-	char	*path;
-	int		path_len;
-	char	*remaining;
-	int		i;
-
-	path_start = skip_whitespace(line + 2);
-	path_end = path_start;
-	while (*path_end && *path_end != '\n' && *path_end != ' ' && *path_end != '\t')
-		path_end++;
-	path_len = path_end - path_start;
-	if (path_len == 0)
-		print_error("Missing texture path", data);
-	remaining = skip_whitespace(path_end);
-	if (*remaining && *remaining != '\n')
-		print_error("Invalid syntax: extra characters after texture path", data);
-	path = safe_malloc(data, path_len + 1);
-	i = 0;
-	while (i < path_len)
-	{
-		path[i] = path_start[i];
-		i++;
-	}
-	path[i] = '\0';
-	return (path);
 }
 
 /**

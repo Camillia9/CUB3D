@@ -2,6 +2,7 @@
 
 int	close_game(t_data *data)
 {
+	free_all_textures(data);
 	printf("Game closed\n");
 	if (data->mlx.img)
 		mlx_destroy_image(data->mlx.mlx, data->mlx.img);
@@ -12,6 +13,7 @@ int	close_game(t_data *data)
 		mlx_destroy_display(data->mlx.mlx);
 		free(data->mlx.mlx);
 	}
+	free_data(data);
 	exit(0);
 }
 

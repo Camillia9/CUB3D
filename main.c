@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	if (!init_mlx(data))
 	{
 	    printf("❌ Error: init_mlx failed\n");
-	    free(data);
+	    free_data(data);
 	    return (1);
 	}
 	//init_map(data);
@@ -47,6 +47,7 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(data->mlx.mlx, game_loop, data);
 	mlx_loop(data->mlx.mlx);
 
+    close_game(data);
 	free_data(data);
 	return (0);
 	
