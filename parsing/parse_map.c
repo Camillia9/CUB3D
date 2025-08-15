@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: camansou <camansou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/15 16:07:06 by camansou          #+#    #+#             */
+/*   Updated: 2025/08/15 16:20:05 by camansou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 static void	calculate_map_dimensions(t_data *data, int start)
@@ -54,5 +66,5 @@ void	validate_map(t_data *data)
 {
 	validate_map_elements(data);
 	validate_map_closure(data);
-	ft_putstr_fd("✓ Map validation successful\n", 1);
+	ft_putstr_fd("Map validation successful\n", 1);
 }

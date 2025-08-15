@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map_closure.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: camansou <camansou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/15 16:07:03 by camansou          #+#    #+#             */
+/*   Updated: 2025/08/15 16:19:29 by camansou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	flood_fill_check(char **grid, int x, int y, t_data *data)
@@ -63,19 +75,15 @@ static int	check_player_enclosed(t_data *data)
 
 int	validate_map_closure(t_data *data)
 {
-	printf("🔍 Checking all empty spaces are enclosed...\n");
 	if (!check_all_zeros_enclosed(data))
 	{
 		print_error("Map not closed: some empty spaces can escape", data);
 		return (0);
 	}
-	printf("✓ All empty spaces are properly enclosed\n");
-	printf("🔍 Checking player can't escape...\n");
 	if (!check_player_enclosed(data))
 	{
 		print_error("Map not closed: player can escape", data);
 		return (0);
 	}
-	printf("✓ Player is properly enclosed\n");
 	return (1);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_file.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: camansou <camansou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/15 16:07:14 by camansou          #+#    #+#             */
+/*   Updated: 2025/08/15 16:20:20 by camansou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 #include "../Libft/get_next_line/get_next_line.h"
 
@@ -58,7 +70,6 @@ static void	parse_config_and_map(t_data *data)
 	map_start = parse_config_section(data);
 	if (!check_config_complete(data))
 		print_error("Incomplete configuration", data);
-	printf("map_start: %d\n", map_start);
 	parse_map_section(data, map_start);
 }
 

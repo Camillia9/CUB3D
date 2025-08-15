@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: camansou <camansou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/15 16:07:20 by camansou          #+#    #+#             */
+/*   Updated: 2025/08/15 16:08:18 by camansou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	is_valid_map_line(char *line)
@@ -39,26 +51,13 @@ void	count_map_elements(t_data *data, int *player_count, int *empty_spaces)
 	}
 }
 
-/**
- * Alloue la mémoire pour le grid de la map
- */
 void	allocate_map_grid(t_data *data)
 {
-	//int i;
 	if (data->map.height <= 0 || data->map.width <= 0)
 		print_error("Invalid map dimensions", data);
 	data->map.grid = malloc(sizeof(char *) * (data->map.height + 1));
 	if (!data->map.grid)
 		print_error("Memory allocation failed for map grid", data);
-	//i = 0;
-	//while (i < data->map.height)
-	//{
-	//	data->map.grid[i] = malloc(sizeof(char) * (data->map.width + 1));
-	//	if (!data->map.grid[i])
-	//		print_error("Memory allocation failed for map row", data);
-	//	i++;
-	//}
-	//data->map.grid[i] = NULL;
 }
 
 int	get_line_length_without_newline(char *line)
