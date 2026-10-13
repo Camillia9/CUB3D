@@ -1,6 +1,6 @@
 NAME = cub3d
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fPIE
+CFLAGS = -Wall -Wextra -Werror -fPIE -std=gnu17
 MLXFLAGS = -Lminilibx-linux -lmlx_Linux -lX11 -lXext -lm
 
 SRCS_DIR = ./
